@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+
+<setup>
+
+    <import class="project.ebd.EventConsumer"/>
+    <import class="org.databene.platform.java.JavaInvoker"/>
+    <import class="org.databene.benerator.distribution.function.*"/>
+    <import defaults="true" domains="person,address" />
+
+    <bean id="dateTimeGen" class="DateTimeGenerator">
+        <property name="minDate" value="2014-11-28"/>
+        <property name="maxDate" value="2014-11-28"/>
+        <property name="dateDistribution" value="random"/>
+        <property name="minTime" value="15:00:00"/>
+        <property name="maxTime" value="23:59:00"/>
+        <property name="timeGranularity" value="00:00:01"/>
+        <property name="timeDistribution" value="random"/>
+    </bean>
+    
+        <bean id="dateTimePing" class="DateTimeGenerator">
+        <property name="minDate" value="2014-11-28"/>
+        <property name="maxDate" value="2014-11-28"/>
+        <property name="dateDistribution" value="random"/>
+        <property name="minTime" value="09:00:00"/>
+        <property name="maxTime" value="14:59:00"/>
+        <property name="timeGranularity" value="00:00:01"/>
+        <property name="timeDistribution" value="random"/>
+    </bean>
+    
+    <bean id="serviceEvent" spec="new EventConsumer('localhost', 5672)"/>
+    <bean id="consumerEvent" spec="new JavaInvoker(serviceEvent, 'write')"/>
+
+    <generate type="eventRegister" count="1000000" consumer="consumerEvent">
+    
+        <variable name="person" generator="org.databene.domain.person.PersonGenerator" />
+     	<variable name="address" generator="org.databene.domain.address.AddressGenerator"/>
+     	<variable name="company" generator="org.databene.domain.organization.CompanyNameGenerator"/>
+     	
+     
+        <attribute name="dateTimeProcessed" type="date" generator="dateTimePing"/>
+        <attribute name="dateTimeEvent" type="date" generator="dateTimeGen"/>
+        <attribute name="typeEvent" type="string" pattern="(DELETE|PATCH|TRANSFER|POST|GET|PUT|LOG)" distribution="new ExponentialFunction(0.5)"/>
+        <attribute name="application" type="string" pattern="(R_SERVER|JAR_APPLICATION|ANALYSIS_SERVER|QUEUE_SERVER|LOGGIN_SERVER|WEB_SERVER|MOODLE_SERVER_1|MOODLE_SERVER_2)" distribution="new ExponentialFunction(0.5)"/>
+        <attribute name="user" type="string" script="person.givenName + ' ' + person.familyName"/>
+        <attribute name="ipHost" type="string" pattern="55\.[0-2][0-5][0-5]\.[0-2][0-5][0-5]\.[0-2][0-5][0-5]"/>
+        <attribute name="cpuUse" type="int" min="1" max="100" granularity="1" distribution="new GaussianFunction(50,20)"/>
+        <attribute name="memoryUse" type="int" min="1" max="100" granularity="1" distribution="new GaussianFunction(50,20)"/>
+        <attribute name="networkStatus" type="string" pattern="(OFFLINE|ONLINE)" distribution="new DiscreteFunction(1,10000)"/>
+        <attribute name="networkTraffic" type="int" min="0" max="100000"/>
+        <attribute name="operatingSystem" type="string" pattern="(OSX_LION|OSX_YOSEMITE|OSX_MAVERICKS|OSX_YOSEMITE|WINDOWS_7|WINDOWS_8|WINDOWS_SERVER|LINUX_CENTOS|LINUX_UBUNTU)" distribution="new ExponentialFunction(0.5)"/>
+        <attribute name="systemError" type="string" pattern="(N|Y)" distribution="new DiscreteFunction(10000,1)"/>
+ 		<attribute name="country" type="string" script="address.country"/>
+ 		<attribute name="city" type="string" script="address.city"/>
+ 		<attribute name="company" type="string" script="company.shortName + ' ' + company.legalForm"/>
+ 		<attribute name="ipServer" type="string" pattern="192\.168\.0\.[0-2][0-5][0-5]"/>
+ 		
+    </generate>
+</setup>

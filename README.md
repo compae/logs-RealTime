@@ -1,21 +1,31 @@
 ***** VERSIONES *****
 
 RABBITMQ 3.4.2
+
 ELASTICSEARCH 1.4.0
+
 LOGSTASH 1.4.2
+
 ZOOKEEPER 3.4.6
+
 STORM 0.9.3
+
 REDIS 2.8.19
+
 KIBANA 3.1.2
+
 
 ***** INICIAR RABBITMQ *****
 
 sudo service rabbitmq-server start
 
 Acceso WEB UI:
+	
 	http://localhost:15672/
+		
 		user:guest
 		pass:guest
+
 
 ***** INICIAR ELASTICSEARCH ******
 
@@ -28,15 +38,18 @@ vim ~/elasticsearch/elasticsearch-1.4.0/config/elasticsearch.yml
 	transport.tcp.port: 9309
 
 ~/elasticsearch/elasticsearch-1.4.0/bin/elasticsearch
+
 ~/elasticsearch/elasticsearch-1.4.0/bin/plugin -install lmenezes/elasticsearch-kopf
 
 curl 'localhost:9200/logstash-2014.11.11/_search?q=*&pretty'
 
 Acceso WEB UI:
+	
 	http://127.0.0.1:9201/_plugin/head/
-	http://127.0.0.1:9201/_plugin/bigdesk/#nodes
-	http://127.0.0.1:9201/_plugin/kopf
 
+	http://127.0.0.1:9201/_plugin/bigdesk/#nodes
+
+	http://127.0.0.1:9201/_plugin/kopf
 
 
 ***** INICIAR LOGSTASH *****
@@ -71,6 +84,7 @@ vim ~/logstash/logstash-1.4.2/bin/logstash-simple.conf
 ~/logstash/logstash-1.4.2/bin/logstash agent -f ~/logstash/logstash-1.4.2/bin/logstash-simple.conf
 
 ps aux | grep logstash
+
 ps aux | grep elasticsearch
 
 
@@ -92,14 +106,19 @@ sudo ~/zookeeper/zookeeper-3.4.6/bin/zkServer.sh start
 vim ~/storm/apache-storm-0.9.3/conf/storm.yaml
 
 	storm.zookeeper.servers:
+
      - "localhost"
+
     nimbus.host: "localhost"
 
 ~/storm/apache-storm-0.9.3/bin/storm supervisor
+
 ~/storm/apache-storm-0.9.3/bin/storm nimbus
+
 ~/storm/apache-storm-0.9.3/bin/storm ui
 
 Acceso WEB UI:
+
 	http://127.0.0.1:8080/index.html
 
 

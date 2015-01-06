@@ -34,9 +34,10 @@ public class AppMeanIndexBolt implements IRichBolt{
 	public void execute(Tuple input) {
 
 		String typeMessage = (String) input.getValueByField("meanAppLabel");
-
+		
 		if(!typeMessage.equals("")){
 
+			
 			Object obj=JSONValue.parse(input.getValueByField("jsonIn").toString());
 			JSONObject jsonObjIn = new JSONObject();		
 			jsonObjIn = (JSONObject) obj;

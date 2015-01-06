@@ -24,13 +24,15 @@ public class MetricsGeneralBolt implements IRichBolt{
 	
 	public void execute(Tuple input) {
 		
-		if(!genKey.equals("")){
+		JSONObject jsonObj = new JSONObject();	
+		jsonObj = (JSONObject) input.getValueByField("message");
 		
-			JSONObject jsonObj = new JSONObject();	
-			jsonObj = (JSONObject) input.getValueByField("message");
+		if((!genKey.equals("")) && (jedis.isConnected()) && (jsonObj.containsKey("cpuUse"))  && (jsonObj.containsKey("memoryUse")) && (jsonObj.containsKey("networkTraffic"))){
+		
 			Integer cpuUse = Integer.parseInt(jsonObj.get("cpuUse").toString());
 			Integer memoryUse = Integer.parseInt(jsonObj.get("memoryUse").toString());
-				
+			
+			
 			jedis.hincrBy(genKey, "count", 1);
 			jedis.hincrBy(genKey, "cpuUse", cpuUse);
 			jedis.hincrBy(genKey, "memoryUse", memoryUse);

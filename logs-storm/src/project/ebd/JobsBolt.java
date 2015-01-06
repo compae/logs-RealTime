@@ -1,7 +1,9 @@
 package project.ebd;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.simple.JSONObject;
 
@@ -47,6 +49,18 @@ public class JobsBolt implements IRichBolt{
 			jedis.incr("totalJobs");
 			hValues = jedis.hgetAll(valueKey);	
 			//jedis.del(valueKey);
+			
+			Set<String> hKeysToDel = jedis.hkeys(valueKey);
+			Iterator<String> it = hKeysToDel.iterator();
+			while(it.hasNext()){
+				String key = it.next();
+				if(key.contains("Data")){
+					jedis.hset(valueKey, key, "");
+				} else {
+					jedis.hset(valueKey, key, "0");
+				}
+			}
+			
 			collector.emit(new Values(gson.toJson(hValues), typeKey, valueKey));
 
 		}

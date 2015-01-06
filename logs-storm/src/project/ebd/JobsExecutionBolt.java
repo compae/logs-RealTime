@@ -32,20 +32,26 @@ public class JobsExecutionBolt implements IRichBolt{
 		String typeMessage = (String) input.getValueByField("type");
 		String application = (String) input.getValueByField("typeValue");
 		
-		if(typeMessage.equals(genLabel)){
+		if(typeMessage.equals(genLabel.toLowerCase())){
 			
-			if((GenMeanIdxCreated) && (jsonObjIn.get("cpuUse") != null) && (jsonObjIn.get("memoryUse") != null) && (jsonObjIn.get("count") != null)) {
+			if((GenMeanIdxCreated) && (jsonObjIn.get("cpuUse") != null) && (jsonObjIn.get("memoryUse") != null)
+					&& (jsonObjIn.get("count") != null) && (!jsonObjIn.get("count").equals("")) && (!jsonObjIn.get("count").equals("0")) 
+					&& (!jsonObjIn.get("memoryUse").equals("0")) && (!jsonObjIn.get("memoryUse").equals(""))
+					&& (!jsonObjIn.get("cpuUse").equals(""))&& (!jsonObjIn.get("cpuUse").equals("0")) && (jsonObjIn.get("networkTraffic") != null)) {
 				
 				JSONObject jsonObj = new JSONObject();		
 				collector.emit(new Values(jsonObjIn, jsonObj, "mean"+genLabel, "","","", application));
 				
 			}
 			
-			if((GenMaxMinIdxCreated) && ((jsonObjIn.get("maxCpuUse") != null) || (jsonObjIn.get("minCpuUse") != null) || (jsonObjIn.get("maxMemoryUse") != null)|| (jsonObjIn.get("minMemoryUse") != null))) {
+			if((GenMaxMinIdxCreated) && ((jsonObjIn.get("maxCpuUse") != null) || (jsonObjIn.get("minCpuUse") != null)
+					|| (jsonObjIn.get("maxMemoryUse") != null)|| (jsonObjIn.get("minMemoryUse") != null))) {
 								
-				if((jsonObjIn.get("maxCpuUse") != null)){
+				if((jsonObjIn.get("maxCpuUse") != null) && (jsonObjIn.get("maxCpuUseData") != null)
+						&& (!jsonObjIn.get("maxCpuUse").equals("")) && (!jsonObjIn.get("maxCpuUse").equals("0"))
+						&& (!jsonObjIn.get("maxCpuUseData").equals("")) && (!jsonObjIn.get("maxCpuUseData").equals("0"))){
 					
-					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxCpuUseData").toString());
+					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxCpuUseData").toString());					
 					JSONObject jsonObj = new JSONObject();		
 					jsonObj = (JSONObject) maxCpuUseObj;
 					
@@ -56,7 +62,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					}
 				}
 
-				if((jsonObjIn.get("minCpuUse") != null)){
+				if((jsonObjIn.get("minCpuUse") != null) && (jsonObjIn.get("minCpuUseData") != null)
+						&& (!jsonObjIn.get("minCpuUse").equals("")) && (!jsonObjIn.get("minCpuUse").equals("0"))
+						&& (!jsonObjIn.get("minCpuUseData").equals("")) && (!jsonObjIn.get("minCpuUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minCpuUseData").toString());
 					JSONObject jsonObj = new JSONObject();		
@@ -69,7 +77,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					}
 				}
 
-				if((jsonObjIn.get("maxMemoryUse") != null)){
+				if((jsonObjIn.get("maxMemoryUse") != null) && (jsonObjIn.get("maxMemoryUseData") != null)
+						&& (!jsonObjIn.get("maxMemoryUse").equals("")) && (!jsonObjIn.get("maxMemoryUse").equals("0"))
+						&& (!jsonObjIn.get("maxMemoryUseData").equals("")) && (!jsonObjIn.get("maxMemoryUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxMemoryUseData").toString());
 					JSONObject jsonObj = new JSONObject();		
@@ -82,7 +92,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					}
 				}
 
-				if((jsonObjIn.get("minMemoryUse") != null)){
+				if((jsonObjIn.get("minMemoryUse") != null) && (jsonObjIn.get("minMemoryUseData") != null)
+						&& (!jsonObjIn.get("minMemoryUse").equals("")) && (!jsonObjIn.get("minMemoryUse").equals("0"))
+						&& (!jsonObjIn.get("minMemoryUseData").equals("")) && (!jsonObjIn.get("minMemoryUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minMemoryUseData").toString());
 					JSONObject jsonObj = new JSONObject();		
@@ -97,18 +109,24 @@ public class JobsExecutionBolt implements IRichBolt{
 			}
 		}
 
-		if(typeMessage.equals("appKey")){
+		if(typeMessage.equals(appLabel.toLowerCase())){
 			
-			if((AppMeanIdxCreated) && (jsonObjIn.get("cpuUse") != null) && (jsonObjIn.get("memoryUse") != null) && (jsonObjIn.get("count") != null)) {
+			if((AppMeanIdxCreated) && (jsonObjIn.get("cpuUse") != null) && (jsonObjIn.get("memoryUse") != null)
+					&& (jsonObjIn.get("count") != null) && (!jsonObjIn.get("count").equals("")) && (!jsonObjIn.get("count").equals("0")) 
+					&& (!jsonObjIn.get("memoryUse").equals("0")) && (!jsonObjIn.get("memoryUse").equals(""))
+					&& (!jsonObjIn.get("cpuUse").equals("")) && (!jsonObjIn.get("cpuUse").equals("0")) && (jsonObjIn.get("networkTraffic") != null)) {
 				
 				JSONObject jsonObj = new JSONObject();
 				collector.emit(new Values(jsonObjIn, jsonObj, "", "", "mean"+appLabel,"", application));
 				
 			}
 			
-			if((AppMaxMinIdxCreated) && (jsonObjIn.get("cpuUse") != null) && (jsonObjIn.get("memoryUse") != null) && (jsonObjIn.get("count") != null)) {
+			if((AppMaxMinIdxCreated) && ((jsonObjIn.get("maxCpuUse") != null) || (jsonObjIn.get("minCpuUse") != null)
+					|| (jsonObjIn.get("maxMemoryUse") != null)|| (jsonObjIn.get("minMemoryUse") != null))) {
 				
-				if((jsonObjIn.get("maxCpuUse") != null)){
+				if((jsonObjIn.get("maxCpuUse") != null) && (jsonObjIn.get("maxCpuUseData") != null)
+						&& (!jsonObjIn.get("maxCpuUse").equals("")) && (!jsonObjIn.get("maxCpuUse").equals("0"))
+						&& (!jsonObjIn.get("maxCpuUseData").equals("")) && (!jsonObjIn.get("maxCpuUseData").equals("0"))){
 					
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxCpuUseData").toString());
 					JSONObject jsonObjmax = new JSONObject();		
@@ -121,9 +139,11 @@ public class JobsExecutionBolt implements IRichBolt{
 					}
 				}
 
-				if((jsonObjIn.get("minCpuUse") != null)){
+				if((jsonObjIn.get("minCpuUse") != null) && (jsonObjIn.get("minCpuUseData") != null)
+						&& (!jsonObjIn.get("minCpuUse").equals("")) && (!jsonObjIn.get("minCpuUse").equals("0"))
+						&& (!jsonObjIn.get("minCpuUseData").equals("")) && (!jsonObjIn.get("minCpuUseData").equals("0"))){
 
-					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minCpuUseData").toString());
+					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minCpuUseData").toString());					
 					JSONObject jsonObjmax = new JSONObject();		
 					jsonObjmax = (JSONObject) maxCpuUseObj;
 
@@ -134,7 +154,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					}
 				}
 
-				if((jsonObjIn.get("maxMemoryUse") != null)){
+				if((jsonObjIn.get("maxMemoryUse") != null) && (jsonObjIn.get("maxMemoryUseData") != null)
+						&& (!jsonObjIn.get("maxMemoryUse").equals("")) && (!jsonObjIn.get("maxMemoryUse").equals("0"))
+						&& (!jsonObjIn.get("maxMemoryUseData").equals("")) && (!jsonObjIn.get("maxMemoryUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxMemoryUseData").toString());
 					JSONObject jsonObjmax = new JSONObject();		
@@ -147,7 +169,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					}
 				}
 
-				if((jsonObjIn.get("minMemoryUse") != null)){
+				if((jsonObjIn.get("minMemoryUse") != null) && (jsonObjIn.get("minMemoryUseData") != null)
+						&& (!jsonObjIn.get("minMemoryUse").equals("")) && (!jsonObjIn.get("minMemoryUse").equals("0"))
+						&& (!jsonObjIn.get("minMemoryUseData").equals("")) && (!jsonObjIn.get("minMemoryUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minMemoryUseData").toString());
 					JSONObject jsonObjmax = new JSONObject();		

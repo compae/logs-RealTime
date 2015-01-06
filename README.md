@@ -1,3 +1,13 @@
+***** VERSIONES *****
+
+RABBITMQ 3.4.2
+ELASTICSEARCH 1.4.0
+LOGSTASH 1.4.2
+ZOOKEEPER 3.4.6
+STORM 0.9.3
+REDIS 2.8.19
+KIBANA 3.1.2
+
 ***** INICIAR RABBITMQ *****
 
 sudo service rabbitmq-server start

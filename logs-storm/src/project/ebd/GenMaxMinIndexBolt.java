@@ -27,7 +27,6 @@ public class GenMaxMinIndexBolt implements IRichBolt{
 	private Integer esPort;
 	private Integer esShards;
 	private Integer esNrep;
-	private String genLabel;
 	private String maxMinMapLabel;
 	private ElasticSearchIndex GenMaxMinIndex;
 
@@ -67,7 +66,7 @@ public class GenMaxMinIndexBolt implements IRichBolt{
 			XContentBuilder builderClient = null;
 			try {
 				builderClient = XContentFactory.jsonBuilder().startObject()
-						.field("application", "")    
+						.field("application", "Generic")    
 						.field("dateTimeJob", fecha)
 						.field("maxCpuUse", maxCpuUse)
 						.field("minCpuUse", minCpuUse)
@@ -82,6 +81,7 @@ public class GenMaxMinIndexBolt implements IRichBolt{
 						.field("dateTimeEvent", jsonObjData.get("dateTimeEvent").toString())
 						.field("dateTimeProcessed", jsonObjData.get("dateTimeProcessed").toString())
 						.field("user", jsonObjData.get("user").toString())
+						.field("typeEvent", jsonObjData.get("typeEvent").toString())
 						.field("company", jsonObjData.get("company").toString())
 						.field("ipServer", jsonObjData.get("ipServer").toString())
 						.field("ipHost", jsonObjData.get("ipHost").toString())
@@ -110,14 +110,13 @@ public class GenMaxMinIndexBolt implements IRichBolt{
 		esShards = Integer.parseInt(stormConf.get("esShards").toString());
 		esNrep = Integer.parseInt(stormConf.get("esNrep").toString());
 		
-		genLabel = stormConf.get("genLabel").toString();
 		maxMinMapLabel = stormConf.get("maxMinMapLabel").toString();
 		
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
 		SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy.MM.dd");
 		
-		GenMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + genLabel + "-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
+		GenMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
 	}
 
 	@Override

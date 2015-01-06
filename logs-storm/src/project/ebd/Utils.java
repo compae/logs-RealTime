@@ -12,7 +12,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 public class Utils {
 
 
-	public static boolean GenMeanCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String genLabel, String appLabel, String meanMapLabel, String maxMinMapLabel){
+	public static boolean GenMeanCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String meanMapLabel, String maxMinMapLabel){
 
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
@@ -20,7 +20,7 @@ public class Utils {
 
 		boolean result = false; 
 
-		ElasticSearchIndex GenMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + genLabel + "-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
+		ElasticSearchIndex GenMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
 
 		if(!GenMeanIndex.IndexExists()){
 			result = GenMeanIndex.CreateIndex();
@@ -47,7 +47,7 @@ public class Utils {
 		return result;
 	}
 
-	public static boolean GenMaxMinCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String genLabel, String appLabel, String meanMapLabel, String maxMinMapLabel){
+	public static boolean GenMaxMinCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String meanMapLabel, String maxMinMapLabel){
 
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
@@ -55,7 +55,7 @@ public class Utils {
 
 		boolean result = false; 
 
-		ElasticSearchIndex GenMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + genLabel + "-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
+		ElasticSearchIndex GenMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
 
 
 		if(!GenMaxMinIndex.IndexExists()){
@@ -99,7 +99,7 @@ public class Utils {
 		return result;
 	}
 
-	public static boolean AppMeanCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String genLabel, String appLabel, String meanMapLabel, String maxMinMapLabel){
+	public static boolean AppMeanCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String meanMapLabel, String maxMinMapLabel){
 
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
@@ -107,7 +107,7 @@ public class Utils {
 
 		boolean result = false; 
 
-		ElasticSearchIndex AppMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + appLabel + "-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
+		ElasticSearchIndex AppMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
 
 		if(!AppMeanIndex.IndexExists()){
 			result = AppMeanIndex.CreateIndex();
@@ -134,7 +134,7 @@ public class Utils {
 		return result;
 	}
 
-	public static boolean AppMaxMinCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String genLabel, String appLabel, String meanMapLabel, String maxMinMapLabel){
+	public static boolean AppMaxMinCreatedIndexElasticSearch(String esClusterName, String esHost, Integer esPort, Integer esShards, Integer esNrep, String meanMapLabel, String maxMinMapLabel){
 
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
@@ -142,7 +142,7 @@ public class Utils {
 
 		boolean result = false; 
 
-		ElasticSearchIndex AppMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + appLabel + "-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
+		ElasticSearchIndex AppMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
 
 		if(!AppMaxMinIndex.IndexExists()){
 			result = AppMaxMinIndex.CreateIndex();

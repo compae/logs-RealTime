@@ -27,7 +27,6 @@ public class AppMeanIndexBolt implements IRichBolt{
 	private Integer esPort;
 	private Integer esShards;
 	private Integer esNrep;
-	private String appLabel;
 	private String meanMapLabel;
 	private ElasticSearchIndex AppMeanIndex;
 
@@ -79,14 +78,13 @@ public class AppMeanIndexBolt implements IRichBolt{
 		esShards = Integer.parseInt(stormConf.get("esShards").toString());
 		esNrep = Integer.parseInt(stormConf.get("esNrep").toString());
 		
-		appLabel = stormConf.get("appLabel").toString();
 		meanMapLabel = stormConf.get("meanMapLabel").toString();
 		
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
 		SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy.MM.dd");
 		
-		AppMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + appLabel + "-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
+		AppMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
 	}
 
 	@Override

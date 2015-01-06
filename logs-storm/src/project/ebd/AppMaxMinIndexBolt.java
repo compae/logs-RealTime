@@ -27,7 +27,6 @@ public class AppMaxMinIndexBolt implements IRichBolt{
 	private Integer esPort;
 	private Integer esShards;
 	private Integer esNrep;
-	private String appLabel;
 	private String maxMinMapLabel;
 	private ElasticSearchIndex AppMaxMinIndex;
 
@@ -84,6 +83,7 @@ public class AppMaxMinIndexBolt implements IRichBolt{
 						.field("dateTimeEvent", jsonObjData.get("dateTimeEvent").toString())
 						.field("dateTimeProcessed", jsonObjData.get("dateTimeProcessed").toString())
 						.field("user", jsonObjData.get("user").toString())
+						.field("typeEvent", jsonObjData.get("typeEvent").toString())
 						.field("company", jsonObjData.get("company").toString())
 						.field("ipServer", jsonObjData.get("ipServer").toString())
 						.field("ipHost", jsonObjData.get("ipHost").toString())
@@ -112,14 +112,13 @@ public class AppMaxMinIndexBolt implements IRichBolt{
 		esShards = Integer.parseInt(stormConf.get("esShards").toString());
 		esNrep = Integer.parseInt(stormConf.get("esNrep").toString());
 		
-		appLabel = stormConf.get("appLabel").toString();
 		maxMinMapLabel = stormConf.get("maxMinMapLabel").toString();
 		
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
 		SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy.MM.dd");
 		
-		AppMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + appLabel + "-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
+		AppMaxMinIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), maxMinMapLabel, esShards, esNrep);
 	}
 
 	@Override

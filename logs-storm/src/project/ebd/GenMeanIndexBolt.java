@@ -27,7 +27,6 @@ public class GenMeanIndexBolt implements IRichBolt{
 	private Integer esPort;
 	private Integer esShards;
 	private Integer esNrep;
-	private String genLabel;
 	private String meanMapLabel;
 	private ElasticSearchIndex GenMeanIndex;
 
@@ -47,7 +46,7 @@ public class GenMeanIndexBolt implements IRichBolt{
 				Date fecha = calendario.getTime();
 
 				builderClient = XContentFactory.jsonBuilder().startObject()
-						.field("application", "")    
+						.field("application", "Generic")    
 						.field("dateTimeJob", fecha)
 						.field("meanCpuUse", Long.parseLong(jsonObjIn.get("cpuUse").toString()) / Long.parseLong(jsonObjIn.get("count").toString()))
 						.field("meanMemoryUse", Long.parseLong(jsonObjIn.get("memoryUse").toString()) / Long.parseLong(jsonObjIn.get("count").toString()))
@@ -77,14 +76,13 @@ public class GenMeanIndexBolt implements IRichBolt{
 		esShards = Integer.parseInt(stormConf.get("esShards").toString());
 		esNrep = Integer.parseInt(stormConf.get("esNrep").toString());
 		
-		genLabel = stormConf.get("genLabel").toString();
 		meanMapLabel = stormConf.get("meanMapLabel").toString();
 		
 		Calendar calendario = GregorianCalendar.getInstance();
 		Date fecha = calendario.getTime();
 		SimpleDateFormat formatoDeFecha = new SimpleDateFormat("yyyy.MM.dd");
 		
-		GenMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + genLabel + "-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
+		GenMeanIndex = new ElasticSearchIndex(esClusterName, esHost, esPort, "storm-" + formatoDeFecha.format(fecha), meanMapLabel, esShards, esNrep);
 		
 	}
 

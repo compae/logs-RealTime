@@ -36,10 +36,18 @@ vim ~/elasticsearch/elasticsearch-1.4.0/config/elasticsearch.yml
 	bootstrap.mlockall: true
 	network.host: 127.0.0.1
 	transport.tcp.port: 9309
+	http.port: 9201
+	http.enabled: true
+	http.cors.enabled: true
+	http.cors.allow-origin: "/.*/"
+	discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
+	discovery.zen.ping.multicast.enabled: false
 
 ~/elasticsearch/elasticsearch-1.4.0/bin/elasticsearch
 
 ~/elasticsearch/elasticsearch-1.4.0/bin/plugin -install lmenezes/elasticsearch-kopf
+~/elasticsearch/elasticsearch-1.4.0/bin/plugin -install mobz/elasticsearch-head
+~/elasticsearch/elasticsearch-1.4.0/bin/plugin -install lukas-vlcek/bigdesk
 
 curl 'localhost:9200/logstash-2014.11.11/_search?q=*&pretty'
 
@@ -173,3 +181,25 @@ hget "GENERAL" "systemError WINDOWS_8"
 hget "GENERAL" "networkStatus PAYNEVILLE"
 
 Probar con: "WEB_SERVER"  "LOGGIN_SERVER"
+
+***** KIBANA *****
+
+Instalar un Servidor Apache:
+	
+	sudo apt-get install apache2
+	sudo mkdir /var/www/html/kibana
+	sudo cp -R ~/kibana/kibana-3.1.2/* /var/www/html/kibana
+	sudo vim /var/www/html/kibana/config.js
+		elasticsearch: "http://localhost:9201"
+	sudo vim /etc/apache2/sites-enabled/000-default.conf 
+		DocumentRoot /var/www/html/kibana
+	sudo vim /etc/apache2/apache2.conf
+		<Directory /var/www/html/kibana>
+			Options Indexes FollowSymLinks
+			AllowOverride None
+			Require all granted
+		</Directory>
+	sudo service apache2 restart
+
+	
+	http://127.0.0.1 	(No funciona Kibana en Chrome Linux)

@@ -25,11 +25,11 @@ public class Configuration {
 	
 	public final static String GEN_KEY = "GENERAL";
 	
-	public final static Integer MAX_SYSTEM_ERRORS = 10000;
-	public final static Integer MAX_NETWORK_ERRORS = 200;
+	public final static Integer MAX_SYSTEM_ERRORS = 5000;
+	public final static Integer MAX_NETWORK_ERRORS = 100;
 	
-	public final static Integer MAX_APP_SYSTEM_ERRORS = 5000;
-	public final static Integer MAX_APP_NETWORK_ERRORS = 50;
+	public final static Integer MAX_APP_SYSTEM_ERRORS = 2500;
+	public final static Integer MAX_APP_NETWORK_ERRORS = 25;
 	
 	public final static String ES_CLUSTER_NAME = "elasticsearch-logs";
 	public final static String ES_HOST = "127.0.0.1";

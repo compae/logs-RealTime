@@ -55,21 +55,21 @@ public class LogsTopology {
 			conf.put("esPort", Configuration.ES_PORT);
 			conf.put("esShards", Configuration.ES_SHARDS);
 			conf.put("esNrep", Configuration.ES_NREP);
-			conf.put("genLabel", Configuration.GEN_INDEX_LABEL);
-			conf.put("appLabel", Configuration.APP_INDEX_LABEL);
 			conf.put("meanMapLabel", Configuration.MEAN_MAPPING_LABEL);
 			conf.put("maxMinMapLabel", Configuration.MAXMIN_MAPPING_LABEL);
+			conf.put("genLabel", Configuration.GEN_INDEX_LABEL);
+			conf.put("appLabel", Configuration.APP_INDEX_LABEL);
 			
 			conf.put("genKey", Configuration.GEN_KEY);
 			
 			GenMeanIdxCreated = project.ebd.Utils.GenMeanCreatedIndexElasticSearch(Configuration.ES_CLUSTER_NAME, Configuration.ES_HOST, Configuration.ES_PORT, Configuration.ES_SHARDS, Configuration.ES_NREP,
-					Configuration.GEN_INDEX_LABEL, Configuration.APP_INDEX_LABEL, Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
+					Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
 			GenMaxMinIdxCreated = project.ebd.Utils.GenMaxMinCreatedIndexElasticSearch(Configuration.ES_CLUSTER_NAME, Configuration.ES_HOST, Configuration.ES_PORT, Configuration.ES_SHARDS, Configuration.ES_NREP,
-					Configuration.GEN_INDEX_LABEL, Configuration.APP_INDEX_LABEL, Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
+					Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
 			AppMeanIdxCreated = project.ebd.Utils.AppMeanCreatedIndexElasticSearch(Configuration.ES_CLUSTER_NAME, Configuration.ES_HOST, Configuration.ES_PORT, Configuration.ES_SHARDS, Configuration.ES_NREP,
-					Configuration.GEN_INDEX_LABEL, Configuration.APP_INDEX_LABEL, Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
+					Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
 			AppMaxMinIdxCreated = project.ebd.Utils.AppMaxMinCreatedIndexElasticSearch(Configuration.ES_CLUSTER_NAME, Configuration.ES_HOST, Configuration.ES_PORT, Configuration.ES_SHARDS, Configuration.ES_NREP,
-					Configuration.GEN_INDEX_LABEL, Configuration.APP_INDEX_LABEL, Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
+					Configuration.MEAN_MAPPING_LABEL, Configuration.MAXMIN_MAPPING_LABEL);
 			
 			conf.put("GenMeanIdxCreated", GenMeanIdxCreated);
 			conf.put("GenMaxMinIdxCreated", GenMaxMinIdxCreated);

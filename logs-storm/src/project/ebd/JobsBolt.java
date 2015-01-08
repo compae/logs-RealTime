@@ -64,7 +64,7 @@ public class JobsBolt implements IRichBolt{
 			collector.emit(new Values(gson.toJson(hValues), typeKey, valueKey));
 
 		}
-
+		
 		collector.ack(input);
 		
 	}

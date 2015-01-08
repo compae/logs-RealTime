@@ -23,13 +23,15 @@ public class EventRegister {
 	private final String city;
 	private final String company;
 	private final String ipServer;
+	private final String postalCode;
+	private final String state;
 
 	public EventRegister(Date dateTimeProcessed, Date dateTimeEvent,
 			String typeEvent, String nameApplication, String nameUser, 
 			String ipHost, Integer cpuUse, Integer memoryUse,
 			String networkStatus, Integer networkTraffic,
 			String operatingSystem, String systemError, String country,
-			String city,String company, String ipServer) {
+			String city,String company, String ipServer, String postalCode, String state) {
 		super();
 		this.dateTimeLastPing = dateTimeProcessed;
 		this.dateTimeEvent = dateTimeEvent;
@@ -47,6 +49,8 @@ public class EventRegister {
 		this.country = country;
 		this.city = city;
 		this.ipServer =  ipServer;
+		this.postalCode = postalCode;
+		this.state = state;
 	}
 	
 	public String JsonOutput(){
@@ -69,11 +73,21 @@ public class EventRegister {
 		eventObject.addProperty("city", city);
 		eventObject.addProperty("company", company);
 		eventObject.addProperty("ipServer", ipServer);
+		eventObject.addProperty("postalCode", postalCode);
+		eventObject.addProperty("state", state);
 		
 		return gson.toJson(eventObject);
 	}
 
 
+
+	public String getState() {
+		return state;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
 
 	@Override
 	public String toString() {
@@ -88,7 +102,9 @@ public class EventRegister {
 				+ "\", \"operatingSystem\"=\"" + operatingSystem
 				+ "\", \"systemError\"=\"" + systemError + "\", \"country\"=\""
 				+ country + "\", \"city\"=\"" + city + "\", \"company\"=\""
-				+ company + "\", \"ipServer\"=\"" + ipServer + "\"}";
+				+ company + "\", \"ipServer\"=\"" + ipServer
+				+ "\", \"postalCode\"=\"" + postalCode + "\", \"state\"=\""
+				+ state + "\"}";
 	}
 
 
@@ -110,9 +126,11 @@ public class EventRegister {
 		String city = args[13].toString();
 		String company = args[14].toString();
 		String ipServer = args[15].toString();
+		String postalCode = args[16].toString();
+		String state = args[17].toString();
 
 		return new EventRegister( dateTimeLastPing,  dateTimeEvent,  typeEvent,  application,
-				user,  ipHost,  cpuUse,  memoryUse,  networkStatus, networkTraffic, operatingSystem, systemError, country, city, company, ipServer);
+				user,  ipHost,  cpuUse,  memoryUse,  networkStatus, networkTraffic, operatingSystem, systemError, country, city, company, ipServer, postalCode, state);
 		
 	}
 	

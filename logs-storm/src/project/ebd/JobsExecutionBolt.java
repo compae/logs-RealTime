@@ -40,7 +40,7 @@ public class JobsExecutionBolt implements IRichBolt{
 					&& (!jsonObjIn.get("cpuUse").equals(""))&& (!jsonObjIn.get("cpuUse").equals("0")) && (jsonObjIn.get("networkTraffic") != null)) {
 				
 				JSONObject jsonObj = new JSONObject();		
-				collector.emit(new Values(jsonObjIn, jsonObj, "mean"+genLabel, "","","", application));
+				collector.emit("streamMeanGenLabel",new Values(jsonObjIn, jsonObj, "mean"+genLabel, application));
 				
 			}
 			
@@ -55,9 +55,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					JSONObject jsonObj = new JSONObject();		
 					jsonObj = (JSONObject) maxCpuUseObj;
 					
-					if(jsonObj.size() >= 16){
+					if(jsonObj.size() >= 20){
 						
-						collector.emit(new Values(jsonObjIn, jsonObj, "", "maxCpuUse"+genLabel,"","", application));
+						collector.emit("streamMaxMinGenLabel", new Values(jsonObjIn, jsonObj, "maxCpuUse"+genLabel, application));
 						
 					}
 				}
@@ -70,9 +70,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					JSONObject jsonObj = new JSONObject();		
 					jsonObj = (JSONObject) maxCpuUseObj;
 
-					if(jsonObj.size() >= 16){
+					if(jsonObj.size() >= 20){
 
-						collector.emit(new Values(jsonObjIn, jsonObj, "", "minCpuUse"+genLabel,"","", application));
+						collector.emit("streamMaxMinGenLabel", new Values(jsonObjIn, jsonObj, "minCpuUse"+genLabel, application));
 
 					}
 				}
@@ -85,9 +85,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					JSONObject jsonObj = new JSONObject();		
 					jsonObj = (JSONObject) maxCpuUseObj;
 
-					if(jsonObj.size() >= 16){
+					if(jsonObj.size() >= 20){
 
-						collector.emit(new Values(jsonObjIn, jsonObj, "", "maxMemoryUse"+genLabel,"","",application));
+						collector.emit("streamMaxMinGenLabel", new Values(jsonObjIn, jsonObj, "maxMemoryUse"+genLabel, application));
 
 					}
 				}
@@ -100,9 +100,9 @@ public class JobsExecutionBolt implements IRichBolt{
 					JSONObject jsonObj = new JSONObject();		
 					jsonObj = (JSONObject) maxCpuUseObj;
 
-					if(jsonObj.size() >= 16){
+					if(jsonObj.size() >= 20){
 
-						collector.emit(new Values(jsonObjIn, jsonObj, "", "minMemoryUse"+genLabel,"","",application));
+						collector.emit("streamMaxMinGenLabel", new Values(jsonObjIn, jsonObj, "minMemoryUse"+genLabel, application));
 
 					}
 				}
@@ -117,7 +117,7 @@ public class JobsExecutionBolt implements IRichBolt{
 					&& (!jsonObjIn.get("cpuUse").equals("")) && (!jsonObjIn.get("cpuUse").equals("0")) && (jsonObjIn.get("networkTraffic") != null)) {
 				
 				JSONObject jsonObj = new JSONObject();
-				collector.emit(new Values(jsonObjIn, jsonObj, "", "", "mean"+appLabel,"", application));
+				collector.emit("streamMeanAppLabel", new Values(jsonObjIn, jsonObj, "mean"+appLabel, application));
 				
 			}
 			
@@ -129,12 +129,12 @@ public class JobsExecutionBolt implements IRichBolt{
 						&& (!jsonObjIn.get("maxCpuUseData").equals("")) && (!jsonObjIn.get("maxCpuUseData").equals("0"))){
 					
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxCpuUseData").toString());
-					JSONObject jsonObjmax = new JSONObject();		
-					jsonObjmax = (JSONObject) maxCpuUseObj;
+					JSONObject jsonObj = new JSONObject();		
+					jsonObj = (JSONObject) maxCpuUseObj;
 					
-					if(jsonObjmax.size() >= 16){
+					if(jsonObj.size() >= 20){
 						
-						collector.emit(new Values(jsonObjIn, jsonObjmax, "", "","","maxCpuUse"+genLabel, application));
+						collector.emit("streamMaxMinAppLabel", new Values(jsonObjIn, jsonObj, "maxCpuUse"+appLabel, application));
 						
 					}
 				}
@@ -144,12 +144,12 @@ public class JobsExecutionBolt implements IRichBolt{
 						&& (!jsonObjIn.get("minCpuUseData").equals("")) && (!jsonObjIn.get("minCpuUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minCpuUseData").toString());					
-					JSONObject jsonObjmax = new JSONObject();		
-					jsonObjmax = (JSONObject) maxCpuUseObj;
+					JSONObject jsonObj = new JSONObject();		
+					jsonObj = (JSONObject) maxCpuUseObj;
 
-					if(jsonObjmax.size() >= 16){
+					if(jsonObj.size() >= 20){
 
-						collector.emit(new Values(jsonObjIn, jsonObjmax, "", "","","minCpuUse"+genLabel, application));
+						collector.emit("streamMaxMinAppLabel", new Values(jsonObjIn, jsonObj, "minCpuUse"+appLabel, application));
 
 					}
 				}
@@ -159,12 +159,12 @@ public class JobsExecutionBolt implements IRichBolt{
 						&& (!jsonObjIn.get("maxMemoryUseData").equals("")) && (!jsonObjIn.get("maxMemoryUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("maxMemoryUseData").toString());
-					JSONObject jsonObjmax = new JSONObject();		
-					jsonObjmax = (JSONObject) maxCpuUseObj;
+					JSONObject jsonObj = new JSONObject();		
+					jsonObj = (JSONObject) maxCpuUseObj;
 
-					if(jsonObjmax.size() >= 16){
+					if(jsonObj.size() >= 20){
 
-						collector.emit(new Values(jsonObjIn, jsonObjmax, "", "","","maxMemoryUse"+genLabel, application));
+						collector.emit("streamMaxMinAppLabel", new Values(jsonObjIn, jsonObj, "maxMemoryUse"+appLabel, application));
 
 					}
 				}
@@ -174,12 +174,12 @@ public class JobsExecutionBolt implements IRichBolt{
 						&& (!jsonObjIn.get("minMemoryUseData").equals("")) && (!jsonObjIn.get("minMemoryUseData").equals("0"))){
 
 					Object maxCpuUseObj=JSONValue.parse(jsonObjIn.get("minMemoryUseData").toString());
-					JSONObject jsonObjmax = new JSONObject();		
-					jsonObjmax = (JSONObject) maxCpuUseObj;
+					JSONObject jsonObj = new JSONObject();		
+					jsonObj = (JSONObject) maxCpuUseObj;
 
-					if(jsonObjmax.size() >= 16){
+					if(jsonObj.size() >= 20){
 
-						collector.emit(new Values(jsonObjIn, jsonObjmax, "", "","","minMemoryUse"+genLabel, application));
+						collector.emit("streamMaxMinAppLabel", new Values(jsonObjIn, jsonObj, "minMemoryUse"+appLabel, application));
 
 					}
 				}
@@ -208,7 +208,12 @@ public class JobsExecutionBolt implements IRichBolt{
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer outputDeclarer) {
 		
-		outputDeclarer.declare(new Fields("jsonIn", "jsonData", "meanGenLabel", "maxMinGenLabel","meanAppLabel", "maxMinAppLabel", "application"));
+		//outputDeclarer.declare(new Fields("jsonIn", "jsonData", "meanGenLabel", "maxMinGenLabel","meanAppLabel", "maxMinAppLabel", "application"));
+		outputDeclarer.declareStream("streamMeanGenLabel", new Fields("jsonIn", "jsonData", "meanGenLabel", "application"));
+		outputDeclarer.declareStream("streamMaxMinGenLabel", new Fields("jsonIn", "jsonData", "maxMinGenLabel", "application"));
+		outputDeclarer.declareStream("streamMeanAppLabel", new Fields("jsonIn", "jsonData", "meanAppLabel", "application"));
+		outputDeclarer.declareStream("streamMaxMinAppLabel", new Fields("jsonIn", "jsonData", "maxMinAppLabel", "application"));
+		
 		
 	}
 

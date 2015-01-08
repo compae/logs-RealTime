@@ -85,6 +85,8 @@ public class GenMaxMinIndexBolt implements IRichBolt{
 						.field("company", jsonObjData.get("company").toString())
 						.field("ipServer", jsonObjData.get("ipServer").toString())
 						.field("ipHost", jsonObjData.get("ipHost").toString())
+						.field("postalCode", jsonObjData.get("postalCode").toString())
+						.field("state", jsonObjData.get("state").toString())
 						.field("networkTraffic", Long.parseLong(jsonObjData.get("networkTraffic").toString()))
 						.endObject();
 				
